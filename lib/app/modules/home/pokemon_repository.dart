@@ -29,18 +29,23 @@ class PokemonRepository extends Disposable {
     }
   }
 
-  Future<List<Pokemon>> getPokemonsObtidos() async{
+  Future<List<Pokemon>> getPokemonsObtidos() async {
     var shared = await SharedPreferences.getInstance();
     var pokemons = shared.getStringList(OBTIDOS_KEY);
-    if (pokemons == null){
+    if (pokemons == null) {
       return [];
     }
     return pokemons.map<Pokemon>((json) => Pokemon.fromJson(json)).toList();
   }
 
-  Future fetchPost() async {
-    final response =
-        await client.get('https://jsonplaceholder.typicode.com/posts/1');
-    return response.data;
+  Future<List<Pokemon>> getAllPokemons() async {
+    final response = await client.get('https://api.pokemontcg.io/v1/cards/');
+    if (response != null && response.statusCode <= 300) {
+      var pokemons = response.data['cards'];
+      return pokemons
+          .map<Pokemon>((json) => Pokemon.fromMapJson(json))
+          .toList();
+    }
+    return [];
   }
 }
