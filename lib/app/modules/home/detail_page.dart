@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokemon_dio/app/modules/home/domain/pokemon.dart';
 import 'package:pokemon_dio/app/modules/home/pokemon_repository.dart';
 
+import 'home_controller.dart';
 import 'home_module.dart';
 
 class PageDetail extends StatefulWidget {
@@ -16,7 +17,7 @@ class PageDetail extends StatefulWidget {
 class _PageDetailState extends State<PageDetail> {
   bool exibirCardExpadindo = false;
 
-  final PokemonRepository repository = HomeModule.to.get<PokemonRepository>();
+  final HomeController controller = HomeModule.to.get<HomeController>();
 
   GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
@@ -78,7 +79,7 @@ class _PageDetailState extends State<PageDetail> {
   }
 
   adicionarListaObtidos() {
-    repository.adicionarListaObtidos(widget.pokemon);
+    controller.adicionarListaObtidos(widget.pokemon);
     _key.currentState.showSnackBar(SnackBar(
       content: Text("Adiciona na lista de obtidos."),
     ));

@@ -19,39 +19,34 @@ final $HomeController = BindInject(
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeController on _HomeControllerBase, Store {
-  final _$valueAtom = Atom(name: '_HomeControllerBase.value');
+  final _$pokemonsAtom = Atom(name: '_HomeControllerBase.pokemons');
 
   @override
-  int get value {
-    _$valueAtom.reportRead();
-    return super.value;
+  List<Pokemon> get pokemons {
+    _$pokemonsAtom.reportRead();
+    return super.pokemons;
   }
 
   @override
-  set value(int value) {
-    _$valueAtom.reportWrite(value, super.value, () {
-      super.value = value;
+  set pokemons(List<Pokemon> value) {
+    _$pokemonsAtom.reportWrite(value, super.pokemons, () {
+      super.pokemons = value;
     });
   }
 
-  final _$_HomeControllerBaseActionController =
-      ActionController(name: '_HomeControllerBase');
+  final _$atualizarPokemonsObtidosAsyncAction =
+      AsyncAction('_HomeControllerBase.atualizarPokemonsObtidos');
 
   @override
-  void increment() {
-    final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
-        name: '_HomeControllerBase.increment');
-    try {
-      return super.increment();
-    } finally {
-      _$_HomeControllerBaseActionController.endAction(_$actionInfo);
-    }
+  Future atualizarPokemonsObtidos() {
+    return _$atualizarPokemonsObtidosAsyncAction
+        .run(() => super.atualizarPokemonsObtidos());
   }
 
   @override
   String toString() {
     return '''
-value: ${value}
+pokemons: ${pokemons}
     ''';
   }
 }

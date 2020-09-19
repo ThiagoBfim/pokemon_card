@@ -14,8 +14,6 @@ class AllCardsPage extends StatefulWidget {
 class _AllCardsPageState extends ModularState<AllCardsPage, HomeController> {
   //use 'controller' variable to access controller
 
-  final PokemonRepository repository = HomeModule.to.get<PokemonRepository>();
-
   List<Pokemon> pokemons = [];
 
   @override
@@ -24,7 +22,7 @@ class _AllCardsPageState extends ModularState<AllCardsPage, HomeController> {
     super.initState();
   }
   void loadPokemons() async {
-    var allPokemons = await repository.getAllPokemons();
+    var allPokemons = await controller.getAllPokemons();
     setState(() {
       pokemons = allPokemons;
     });
