@@ -37,7 +37,10 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                 icon: Icon(Icons.person), title: Text("obtidos")),
           ],
         ),
-        body: paginas[_currentIndex]);
+        body: IndexedStack(
+          index: _currentIndex,
+          children: paginas,
+        ));
   }
 
   trocarPagina(int index) {
