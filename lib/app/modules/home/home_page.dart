@@ -41,14 +41,83 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
       crossAxisCount: 2,
       children: List.generate(pokemons.length, (index) {
         var pokemon = pokemons[index];
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 5.0),
-          child: Hero(
-            tag: pokemon.id,
-            child: Image.network(pokemon.imageUrl),
+        return GestureDetector(
+          onTap: () => abrirTelaDetalhar(pokemon),
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 5.0),
+            child: Hero(
+              tag: pokemon.id,
+              child: Image.network(pokemon.imageUrl),
+            ),
           ),
         );
       }),
     ));
+  }
+
+  abrirTelaDetalhar(Pokemon pokemon) {
+    Navigator.of(context).push(
+        PageRouteBuilder(pageBuilder: (context, animation, secondaryAnimation) {
+      return PageDetail(pokemon: pokemon);
+    }));
+  }
+}
+
+class PageDetail extends StatefulWidget {
+  final Pokemon pokemon;
+
+  const PageDetail({Key key, this.pokemon}) : super(key: key);
+
+  @override
+  _PageDetailState createState() => _PageDetailState();
+}
+
+class _PageDetailState extends State<PageDetail> {
+  bool exibirCardExpadindo = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.pokemon.name),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () => alterarExibicaoCard(),
+              child: Visibility(
+                visible: !exibirCardExpadindo,
+                child: Hero(
+                  tag: widget.pokemon.id,
+                  child: Image.network(widget.pokemon.imageUrl),
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () => alterarExibicaoCard(),
+              child: Visibility(
+                visible: exibirCardExpadindo,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    child: Image.network(widget.pokemon.imageUrlHiRes),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  alterarExibicaoCard() {
+    setState(() {
+      exibirCardExpadindo = !exibirCardExpadindo;
+    });
   }
 }
