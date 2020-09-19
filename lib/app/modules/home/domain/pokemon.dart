@@ -8,26 +8,33 @@ class Pokemon {
   final String imageUrl;
   final String imageUrlHiRes;
   final String name;
+  final CardType cardType;
 
-  Pokemon(
-      {@required this.id,
-      @required this.types,
-      @required this.imageUrl,
-      @required this.imageUrlHiRes,
-      @required this.name});
+  Pokemon({
+    @required this.id,
+    @required this.types,
+    @required this.imageUrl,
+    @required this.imageUrlHiRes,
+    @required this.name,
+    @required this.cardType,
+  });
 
-  String toJson() {
-    Map<String, dynamic> json = _fromMapJson();
+  String uniqueId(){
+    return cardType.toString() + id;
+  }
+  String toJson(CardType cardType) {
+    Map<String, dynamic> json = _fromMapJson(cardType);
     return jsonEncode(json);
   }
 
-  Map<String, dynamic> _fromMapJson() {
+  Map<String, dynamic> _fromMapJson(CardType customCardType) {
     return {
       'id': id,
       'types': types,
       'imageUrl': imageUrl,
       'imageUrlHiRes': imageUrlHiRes,
       'name': name,
+      'cardType': customCardType.toString(),
     };
   }
 
@@ -43,6 +50,23 @@ class Pokemon {
       imageUrlHiRes: map['imageUrlHiRes'],
       name: map['name'],
       types: map['types'],
+      cardType: CardTypeHelper.fromString(map['cardType']),
     );
+  }
+}
+
+enum CardType { FAVORITE, PUBLIC, MY_CARD }
+
+class CardTypeHelper {
+  static fromString(String cardType) {
+    if (cardType == null) {
+      return CardType.PUBLIC;
+    }
+    for (var type in CardType.values) {
+      if (type.toString().contains(cardType)) {
+        return type;
+      }
+    }
+    return CardType.PUBLIC;
   }
 }

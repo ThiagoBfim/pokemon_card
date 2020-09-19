@@ -22,9 +22,9 @@ class PokemonRepository extends Disposable {
     var pokemons = shared.getStringList(OBTIDOS_KEY);
 
     if (pokemons == null || pokemons.isEmpty) {
-      shared.setStringList(OBTIDOS_KEY, [pokemon.toJson()]);
+      shared.setStringList(OBTIDOS_KEY, [pokemon.toJson(CardType.MY_CARD)]);
     } else {
-      pokemons.add(pokemon.toJson());
+      pokemons.add(pokemon.toJson(CardType.MY_CARD));
       shared.setStringList(OBTIDOS_KEY, pokemons);
     }
   }
@@ -35,7 +35,29 @@ class PokemonRepository extends Disposable {
     if (pokemons == null) {
       return [];
     }
-    return pokemons.map<Pokemon>((json) => Pokemon.fromJson(json)).toList();
+    await atualizarListaPokemonsAntigos(pokemons);
+    return shared
+        .getStringList(OBTIDOS_KEY)
+        .map<Pokemon>((json) => Pokemon.fromJson(json))
+        .toList();
+  }
+
+  //TODO remover depois da implantação da versão 2.0
+  atualizarListaPokemonsAntigos(List<String> pokemons) async {
+    var pokemonsCarregados =
+        pokemons.map<Pokemon>((pokemon) => Pokemon.fromJson(pokemon)).toList();
+
+    var deveRecarregar = pokemonsCarregados.firstWhere(
+        (element) => element.cardType == CardType.PUBLIC,
+        orElse: () => null);
+
+    if (deveRecarregar != null) {
+      var shared = await SharedPreferences.getInstance();
+      shared.setStringList(OBTIDOS_KEY, []);
+      for (Pokemon pokemon in pokemonsCarregados) {
+        await adicionarListaObtidos(pokemon);
+      }
+    }
   }
 
   Future<List<Pokemon>> getAllPokemons() async {
