@@ -1,16 +1,22 @@
-# pokemon_dio
+# Pokemon Card
 
-A new Flutter project. Created by Slidy
+Projeto para realização de uma listagem de cards de pokemon por meio de uma API.
 
-## Getting Started
+## Aplicativo
 
-This project is a starting point for a Flutter application.
+<div align='center'>
+    <img src="images/tela1.jpeg" width="200">
+    <img src="images/tela2.jpeg" width="200">
+    <img src="images/tela3.jpeg" width="200">
+</div>
 
-A few resources to get you started if this is your first Flutter project:
+## Technologies
+* [Flutter](https://flutter.dev)
+* [API - pokemontcg.io](https://api.pokemontcg.io/v1/cards/)
+* [Slidy](https://github.com/Flutterando/slidy)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Main Packages
+* Flutter Modular
+* Mobx
+* Dio
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
