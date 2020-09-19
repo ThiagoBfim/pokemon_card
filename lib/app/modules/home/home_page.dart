@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pokemon_dio/app/modules/home/all_cards_page.dart';
 import 'package:pokemon_dio/app/modules/home/detail_page.dart';
 import 'package:pokemon_dio/app/modules/home/domain/pokemon.dart';
+import 'package:pokemon_dio/app/modules/home/my_cards_page.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,7 +19,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
   List<Widget> paginas = [
     AllCardsPage(),
     Container(),
-    Container(),
+    MyCardsPage(),
   ];
 
   @override

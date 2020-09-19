@@ -27,8 +27,15 @@ class PokemonRepository extends Disposable {
       pokemons.add(pokemon.toJson());
       shared.setStringList(OBTIDOS_KEY, pokemons);
     }
+  }
 
-    print(shared.getStringList(OBTIDOS_KEY));
+  Future<List<Pokemon>> getPokemonsObtidos() async{
+    var shared = await SharedPreferences.getInstance();
+    var pokemons = shared.getStringList(OBTIDOS_KEY);
+    if (pokemons == null){
+      return [];
+    }
+    return pokemons.map<Pokemon>((json) => Pokemon.fromJson(json)).toList();
   }
 
   Future fetchPost() async {
